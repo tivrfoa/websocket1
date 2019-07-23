@@ -1,0 +1,54 @@
+<!--
+
+    Tutorial from:
+    https://www.youtube.com/watch?v=bJQQgqxQoxI
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WebSockets!</title>
+    <style>
+        #log {
+            width: 700px;
+            height: 300px;
+            margin: 0 auto;
+            border: 5px solid black;
+            border-radius: 7px;
+        }
+    </style>
+</head>
+<body>
+    <div id="log"></div>
+    <label>Your message:
+        <input type="text" id="text">
+    </label>
+    <button>Send</button>    
+    <script>
+        // let ws = new WebSocket("ws://localhost:5001");
+        let ws = new WebSocket("ws://10.0.0.103:5001");
+
+        let log = document.getElementById('log');
+        let button =  document.querySelector('button');
+        let text = document.getElementById('text');
+
+        ws.onmessage = function(e) {
+            console.log(e);
+            log.innerHTML += e.data + "<br>";
+        }
+
+        button.onclick = function() {
+            ws.send(text.value);
+        }
+
+        text.addEventListener('keyup', (e) => {
+            if (event.key === 'Enter') {
+                button.click();
+            }
+        });
+    </script>
+</body>
+</html>
